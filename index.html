@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MalumPíadas — Farofa da Tia Alina</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f3d24;--bg2:#0a2a18;--cream:#fff4d8;--gold:#f2c230;--red:#a3232d;--purple:#4a1f6e;--ink:#12301f;--c:#e0364a;--t:#3b6fd4;--b:#2fb35a}
+*{box-sizing:border-box;margin:0}
+body{font-family:'Barlow Condensed',system-ui,sans-serif;font-weight:600;font-size:18px;background:radial-gradient(circle at 50% -10%,#1d5a36,var(--bg) 40%,var(--bg2));min-height:100vh;color:var(--cream);padding:0 14px 60px}
+h1,h2,h3{font-family:Anton,Impact,sans-serif;font-weight:400;letter-spacing:.5px}
+.wrap{max-width:860px;margin:0 auto}
+header{text-align:center;padding:26px 0 10px}
+header img{width:110px;filter:drop-shadow(0 6px 10px #0008)}
+header h1{font-size:clamp(44px,12vw,84px);line-height:1;text-shadow:3px 3px 0 #c9971a}
+.sub{display:inline-block;margin-top:10px;padding:4px 16px;border:2px solid var(--gold);background:#1e6b3c;color:var(--gold);border-radius:6px;font-weight:700;letter-spacing:2px}
+.live{font-size:15px;opacity:.85;margin-top:8px}.live i{display:inline-block;width:9px;height:9px;border-radius:50%;background:#4ade80;margin-right:6px;animation:p 1.6s infinite}
+@keyframes p{50%{opacity:.25}}
+nav{display:flex;gap:6px;margin:18px 0;position:sticky;top:0;z-index:5;background:#0a2a18ee;padding:8px;border-radius:12px;backdrop-filter:blur(6px)}
+nav button{flex:1;font:inherit;font-size:17px;padding:10px 4px;border:2px solid transparent;background:none;color:var(--cream);border-radius:8px;cursor:pointer}
+nav button.on{background:var(--gold);color:var(--ink)}
+nav button:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.card{background:var(--cream);color:var(--ink);border-radius:14px;padding:16px;margin-bottom:14px}
+.card h2{font-size:26px;color:#1e6b3c;margin-bottom:8px}
+.pod{display:grid;gap:12px}
+.team{display:grid;grid-template-columns:54px 1fr auto;gap:12px;align-items:center;background:var(--cream);color:var(--ink);border-radius:14px;padding:14px;border-left:12px solid var(--k)}
+.team.first{outline:4px solid var(--gold);box-shadow:0 0 28px #f2c23066}
+.pos{font-family:Anton;font-size:40px;text-align:center}
+.team h3{font-size:28px}.bar{height:10px;border-radius:6px;background:#0001;margin-top:6px;overflow:hidden}.bar b{display:block;height:100%;background:var(--k);transition:width .8s}
+.pts{font-family:Anton;font-size:46px;line-height:1;text-align:right}.pts small{display:block;font:600 14px 'Barlow Condensed';opacity:.7}
+.alert{background:var(--purple);color:var(--cream);border:2px solid var(--gold);border-radius:12px;padding:14px;margin-bottom:14px}
+.alert b{color:var(--gold)}
+table{width:100%;border-collapse:collapse;font-size:17px}th,td{padding:6px 4px;text-align:center;border-bottom:1px solid #0002}td:first-child,th:first-child{text-align:left}tfoot td{font-weight:700;border:0}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:4px}
+.game{border-top:6px solid var(--gold)}
+.tag{display:inline-block;background:#1e6b3c;color:var(--cream);padding:1px 8px;border-radius:5px;font-size:15px;margin:2px 3px 2px 0}
+.tag.r{background:var(--red)}
+.match{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 0;border-top:1px dashed #0003}
+.vs{flex:1 1 100%;font-size:19px}
+.btn,.match button,.cnt button{font:inherit;font-weight:700;padding:8px 12px;border-radius:8px;border:2px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer}
+.btn{background:var(--gold)}
+.match button.win{background:var(--k);color:#fff;border-color:var(--k)}
+.cnt{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:6px 0}.cnt span{min-width:130px}
+select,input{font:inherit;padding:8px;border-radius:8px;border:2px solid var(--ink);width:100%;max-width:260px}
+.mem{columns:2;font-size:17px;padding-left:20px}
+.res{font-size:17px;color:#1e6b3c}
+.note{font-size:15px;opacity:.8}
+.pen{display:flex;gap:10px;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <img src="medalha.png" alt="Medalha MalumPíadas 2026" onerror="this.style.display='none'">
+  <h1>MALUMPÍADAS</h1>
+  <div class="sub">★ FAROFA DA TIA ALINA ★</div>
+  <div class="live" id="live"></div>
+</header>
+<nav id="nav"></nav>
+<main id="app"></main>
+<audio id="bgm" src="musica.mp3" loop preload="auto"></audio>
+<button id="mute" aria-label="Ligar ou desligar a música" style="position:fixed;right:14px;bottom:14px;z-index:9;width:52px;height:52px;border-radius:50%;border:2px solid var(--gold);background:var(--bg2);color:var(--cream);font-size:24px;cursor:pointer">🔊</button>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script>
+/* ============ CONFIGURAÇÃO ============
+   Cole aqui o firebaseConfig do seu projeto (Firebase Console > Configurações do projeto > Seus apps > Web).
+   Enquanto for null, o site roda em MODO TESTE (dados só no seu navegador). */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDaTabuA209PHKEa_vYW5YIEeVGg6_9HZ8",
+  authDomain: "malumpiadas.firebaseapp.com",
+  projectId: "malumpiadas",
+  storageBucket: "malumpiadas.firebasestorage.app",
+  messagingSenderId: "10822392539",
+  appId: "1:10822392539:web:58f302ce98aa314b1c8afe"
+};
+/* Exemplo:
+const FIREBASE_CONFIG = { apiKey:"...", authDomain:"...", projectId:"...", appId:"..." };
+*/
+
+const TEAMS = {
+  c:{name:'Catchaumm',e:'🔴',k:'#e0364a',m:['Catarina','Iasmin','Maria C','Diego','Jackson','Manu','Igor']},
+  t:{name:'Tartarugos Ninjos',e:'🔵',k:'#3b6fd4',m:['Anderson','Vitória','Davi','Rhuan','Yara','Assíria','Malu']},
+  b:{name:'Bentenison',e:'🟢',k:'#2fb35a',m:['Talyson','Anderson Catarina','Acait','Marcos','Irmã de Malu','Heloísa','Guilherme']}
+};
+const K = Object.keys(TEAMS);
+const RR = [['c','t'],['t','b'],['b','c']]; // todos contra todos (cada time joga 2 e folga 1)
+/* type 'rank': admin escolhe a ordem de chegada; pts = pontos por colocação.
+   type 'count': admin soma pontos manualmente (Qual é a música?) */
+const GAMES = [
+ {id:'kahoot',n:'Kahoot',i:'📱',type:'rank',pts:[5,3,1],ms:[K],d:'Os 3 times jogam ao mesmo tempo, pelo celular. Pontos somados e os 3 primeiros sobem ao pódio.'},
+ {id:'cabo',n:'Cabo de Guerra',i:'🪢',type:'rank',pts:[2,1],ms:RR,d:'Passou da marca central, perdeu. Vencedor +2, perdedor +1.'},
+ {id:'mimica',n:'Mímica',i:'🎭',type:'rank',pts:[6,4,0],ms:[K],d:'Só gestos, sem falar. Ganha quem acertar a carta no tempo do cronômetro.'},
+ {id:'natacao',n:'Natação',i:'🏊',type:'rank',pts:[6,4,2],ms:[K],d:'Cada time na sua raia. Vence quem fizer TODOS os membros completarem no menor tempo.'},
+ {id:'beer',n:'Beerpong',i:'🏓',type:'rank',pts:[2,1],ms:RR,d:'Duplas fixas com alguém do time adversário. Vencedor +2, perdedor +1.'},
+ {id:'queimado',n:'Queimado',i:'🔥',type:'rank',pts:[4,2],ms:RR,d:'Vence quem queimar todos primeiro; se o tempo acabar, quem tiver mais jogadores em campo.'},
+ {id:'musica',n:'Qual é a Música?',i:'🎵',type:'count',btn:[2,1],ms:[],d:'30 segundos para responder. Acertou a música +2, acertou só a banda/artista +1. Se não souber, passa para o outro time.'},
+ {id:'volei',n:'Vôlei',i:'🏐',type:'rank',pts:[4,2],ms:RR,d:'Pontuação sugerida: vencedor +4, perdedor +2 (ajuste em GAMES, no código, se quiserem outra regra).'},
+ {id:'futebol',n:'Futebol',i:'⚽',type:'rank',pts:[4,2],ms:RR,d:'Pontuação sugerida: vencedor +4, perdedor +2 (ajuste em GAMES, no código, se quiserem outra regra).'},
+];
+GAMES.forEach(g=>g.ms=g.ms.map((t,i)=>({id:g.id+'_'+i,t})));
+
+let S={results:{},counters:{}}, tab='rank', isAdmin=false, ref=null, auth=null, authErr='';
+const noSdk=(typeof firebase==='undefined'), demo=!FIREBASE_CONFIG||noSdk, FV=()=>firebase.firestore.FieldValue;
+
+/* ---------- dados ---------- */
+if(demo){
+  try{S=Object.assign(S,JSON.parse(localStorage.getItem('malum')||'{}'))}catch(e){}
+  isAdmin=true;
+}else{
+  firebase.initializeApp(FIREBASE_CONFIG);
+  ref=firebase.firestore().doc('malumpiadas/estado'); auth=firebase.auth();
+  ref.onSnapshot(s=>{const d=s.data()||{};S={results:d.results||{},counters:d.counters||{}};render()},e=>console.error(e));
+  auth.onAuthStateChanged(u=>{isAdmin=!!u;render()});
+}
+const save=()=>{if(demo){localStorage.setItem('malum',JSON.stringify(S));render()}};
+function setRes(id,arr){
+  if(demo){arr?S.results[id]=arr:delete S.results[id];return save()}
+  arr?ref.set({results:{[id]:arr}},{merge:true}):ref.update({['results.'+id]:FV().delete()}).catch(()=>{});
+}
+function addCnt(g,k,n){
+  const cur=((S.counters[g]||{})[k])||0; if(cur+n<0)return;
+  if(demo){(S.counters[g]=S.counters[g]||{})[k]=cur+n;return save()}
+  ref.set({counters:{[g]:{[k]:FV().increment(n)}}},{merge:true});
+}
+function resetAll(){
+  if(!confirm('Apagar TODOS os pontos? Isso não pode ser desfeito.'))return;
+  if(demo){S={results:{},counters:{}};save()}else ref.set({results:{},counters:{}});
+}
+
+/* ---------- cálculo ---------- */
+function gamePts(g){
+  const p={c:0,t:0,b:0};
+  if(g.type==='rank')g.ms.forEach(m=>(S.results[m.id]||[]).forEach((k,i)=>p[k]+=g.pts[i]||0));
+  else K.forEach(k=>p[k]+=((S.counters[g.id]||{})[k])||0);
+  return p;
+}
+function totals(){
+  const T={c:0,t:0,b:0},P={c:0,t:0,b:0},pc=S.counters.penaltis||{};
+  GAMES.forEach(g=>{const p=gamePts(g);K.forEach(k=>T[k]+=p[k])});
+  K.forEach(k=>P[k]=pc[k]||0);
+  return {T,P};
+}
+
+/* ---------- telas ---------- */
+const $=s=>document.querySelector(s);
+const tn=k=>`<span class="dot" style="background:${TEAMS[k].k}"></span>${TEAMS[k].name}`;
+
+function vRank(){
+  const {T,P}=totals();
+  const order=[...K].sort((a,b)=>T[b]-T[a]||P[b]-P[a]);
+  const max=Math.max(1,...K.map(k=>T[k]));
+  const top=order.filter(k=>T[k]===T[order[0]]);
+  const played=Object.keys(S.results).length;
+  let h='';
+  if(top.length>1&&played>0){
+    const pen=top.every(k=>P[k]>0)?` Placar nos pênaltis: ${top.map(k=>TEAMS[k].name+' '+P[k]).join(' × ')}.`:'';
+    h+=`<div class="alert"><b>⚽ EMPATE NO TOPO!</b> ${top.map(k=>TEAMS[k].name).join(' e ')} estão com ${T[top[0]]} pts. Quem fizer mais gols nos pênaltis ganha as MalumPíadas.${pen}</div>`;
+  }
+  h+='<div class="pod">'+order.map((k,i)=>`<div class="team ${i===0&&played?'first':''}" style="--k:${TEAMS[k].k}">
+    <div class="pos">${i===0?'🏆':i+1+'º'}</div>
+    <div><h3>${TEAMS[k].e} ${TEAMS[k].name}</h3><div class="bar"><b style="width:${T[k]/max*100}%"></b></div></div>
+    <div class="pts">${T[k]}<small>pts${P[k]?` · ${P[k]} ⚽`:''}</small></div></div>`).join('')+'</div>';
+  h+=`<div class="card" style="margin-top:14px"><h2>Pontos por jogo</h2><div style="overflow-x:auto"><table><tr><th>Jogo</th>${K.map(k=>`<th><span class="dot" style="background:${TEAMS[k].k}"></span>${TEAMS[k].name.split(' ')[0]}</th>`).join('')}</tr>`+
+    GAMES.map(g=>{const p=gamePts(g);return `<tr><td>${g.i} ${g.n}</td>${K.map(k=>`<td>${p[k]}</td>`).join('')}</tr>`}).join('')+
+    `<tfoot><tr><td>Total</td>${K.map(k=>`<td>${T[k]}</td>`).join('')}</tr></tfoot></table></div></div>`;
+  return h;
+}
+
+function resText(g,m){
+  const r=S.results[m.id]; if(!r)return '<span class="note">aguardando resultado</span>';
+  return r.map((k,i)=>`${i+1}º ${TEAMS[k].name} (+${g.pts[i]||0})`).join(' · ');
+}
+function vGames(){
+  return `<div class="card"><h2>Como os times se enfrentam</h2><p>Jogos de <b>2 times</b>: todos contra todos — cada time joga 2 vezes e folga 1 vez. Jogos de <b>3 times</b> e o Qual é a Música? têm todos juntos na mesma rodada. Empate no final: pênaltis.</p></div>`+
+  GAMES.map((g,gi)=>`<div class="card game"><h2>${gi+1}. ${g.i} ${g.n}</h2><p>${g.d}</p>
+   <div style="margin:6px 0">${g.type==='count'?g.btn.map(n=>`<span class="tag">+${n} pt${n>1?'s':''}</span>`).join(''):g.pts.map((n,i)=>`<span class="tag ${i?'':'r'}">${i+1}º +${n}</span>`).join('')}</div>`+
+   (g.type==='count'?`<div class="res">${K.map(k=>`${TEAMS[k].e} ${((S.counters[g.id]||{})[k])||0}`).join(' &nbsp; ')}</div>`+(isAdmin?adminCount(g.id,g.btn):''):
+   g.ms.map(m=>`<div class="match"><div class="vs">${m.t.length===3?'🔴🔵🟢 Todos juntos':m.t.map(tn).join(' ⚔️ ')+(m.t.length===2?`<span class="note"> &nbsp;(folga: ${TEAMS[K.find(k=>!m.t.includes(k))].name})</span>`:'')}</div>
+     <div class="res">${resText(g,m)}</div>${isAdmin?adminMatch(g,m):''}</div>`).join(''))+`</div>`).join('')+
+  `<div class="card game"><h2>10. ⚽ Desempate nos pênaltis</h2><p>Só se houver empate no topo. Todos se revezam de batedor e goleiro. Cada gol +1; maior pontuação ganha as MalumPíadas.</p>
+   <div class="res">${K.map(k=>`${TEAMS[k].e} ${((S.counters.penaltis||{})[k])||0} gol(s)`).join(' &nbsp; ')}</div>${isAdmin?adminCount('penaltis',[1]):''}</div>`;
+}
+function adminCount(id,btns){
+  return K.map(k=>`<div class="cnt"><span>${TEAMS[k].e} ${TEAMS[k].name}</span>`+
+    btns.map(n=>`<button onclick="addCnt('${id}','${k}',${n})">+${n}</button>`).join('')+
+    `<button onclick="addCnt('${id}','${k}',-1)" aria-label="Remover 1 ponto">−1</button></div>`).join('');
+}
+function adminMatch(g,m){
+  const r=S.results[m.id]||[];
+  let h='';
+  if(m.t.length===2){
+    h=m.t.map(k=>`<button class="${r[0]===k?'win':''}" style="--k:${TEAMS[k].k}" onclick="setRes('${m.id}',['${k}','${m.t.find(x=>x!==k)}'])">🏆 ${TEAMS[k].name}</button>`).join('');
+  }else{
+    h=m.t.map((_,i)=>`<label class="note">${i+1}º lugar<select onchange="pick('${m.id}')" data-m="${m.id}"><option value="">—</option>${K.map(k=>`<option value="${k}" ${r[i]===k?'selected':''}>${TEAMS[k].name}</option>`).join('')}</select></label>`).join('');
+  }
+  return h+(r.length?`<button onclick="setRes('${m.id}',null)">Limpar</button>`:'');
+}
+function pick(id){
+  const v=[...document.querySelectorAll(`select[data-m="${id}"]`)].map(s=>s.value);
+  if(v.every(Boolean)&&new Set(v).size===v.length)setRes(id,v);
+  else if(v.every(Boolean))alert('Escolha times diferentes em cada colocação.');
+}
+
+function vTeams(){
+  return K.map(k=>`<div class="card" style="border-left:12px solid ${TEAMS[k].k}"><h2>${TEAMS[k].e} ${TEAMS[k].name}</h2><ol class="mem">${TEAMS[k].m.map(n=>`<li>${n}</li>`).join('')}</ol></div>`).join('');
+}
+
+function vAdmin(){
+  if(demo)return `<div class="alert"><b>Modo teste:</b> os pontos ficam só neste navegador. Configure o Firebase (veja as instruções) para ter o ranking em tempo real para todos.</div>
+   <div class="card"><h2>Lançar pontos</h2><p>Vá na aba <b>Jogos</b>: os botões de lançamento aparecem em cada partida.</p><br><button class="btn" onclick="resetAll()">Zerar tudo</button></div>`;
+  if(!isAdmin)return `<div class="card"><h2>Entrar (organizadores)</h2><p class="note">Só as duas pessoas autorizadas conseguem lançar pontos.</p><br>
+   <p><input id="em" type="email" placeholder="e-mail" autocomplete="username"></p><br><p><input id="pw" type="password" placeholder="senha" autocomplete="current-password"></p><br>
+   <button class="btn" onclick="login()">Entrar</button><p style="color:#a3232d;margin-top:8px">${authErr}</p></div>`;
+  return `<div class="card"><h2>Você é organizador ✅</h2><p>Vá na aba <b>Jogos</b> para lançar os resultados. Tudo atualiza na hora para quem está olhando o ranking.</p><br>
+   <button class="btn" onclick="auth.signOut()">Sair</button> <button class="btn" onclick="resetAll()">Zerar tudo</button></div>`;
+}
+function login(){
+  authErr='';auth.signInWithEmailAndPassword($('#em').value,$('#pw').value).catch(()=>{authErr='E-mail ou senha incorretos.';render()});
+}
+
+const TABS=[['rank','🏆 Ranking'],['games','🎮 Jogos'],['teams','👥 Times'],['admin','🔐 Admin']];
+function render(){
+  const f=document.activeElement; if(f&&f.tagName==='SELECT'&&tab==='games')return; // não fecha o select aberto
+  if(f&&(f.id==='em'||f.id==='pw'))return;
+  $('#nav').innerHTML=TABS.map(([id,l])=>`<button class="${tab===id?'on':''}" onclick="tab='${id}';render()">${l}</button>`).join('');
+  $('#app').innerHTML={rank:vRank,games:vGames,teams:vTeams,admin:vAdmin}[tab]();
+  $('#live').innerHTML=demo?(noSdk&&FIREBASE_CONFIG?'⚠️ Firebase não carregou — modo teste':'Modo teste (sem tempo real)'):'<i></i>Ao vivo — atualiza sozinho';
+}
+render();
+/* ---------- música de fundo ---------- */
+const bgm=document.getElementById('bgm'),mb=document.getElementById('mute');
+bgm.volume=.5;
+let muted=false;try{muted=localStorage.getItem('malumMute')==='1'}catch(e){}
+const icon=()=>{mb.textContent=(muted||bgm.paused)?'🔇':'🔊'};
+function tryPlay(){if(muted)return;bgm.play().then(icon).catch(()=>{})}
+tryPlay(); // alguns navegadores bloqueiam; então começa no primeiro toque/clique
+['pointerdown','keydown','touchstart'].forEach(ev=>addEventListener(ev,function f(){if(!muted&&bgm.paused)tryPlay();if(!bgm.paused)['pointerdown','keydown','touchstart'].forEach(x=>removeEventListener(x,f))},{passive:true}));
+mb.onclick=()=>{muted=!muted;try{localStorage.setItem('malumMute',muted?'1':'0')}catch(e){}muted?bgm.pause():bgm.play().catch(()=>{});icon()};
+bgm.onplay=bgm.onpause=icon;icon();
+</script>
+</body>
+</html>
